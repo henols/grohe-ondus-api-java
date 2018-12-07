@@ -44,7 +44,7 @@ public class ApplianceActionTest {
     @Test
     public void getAppliances_validResponse_returnsListOfAppliances() throws Exception {
         when(mockApiResponse.getStatusCode()).thenReturn(200);
-        when(mockApiResponse.getContent()).thenReturn(Optional.of(new BaseAppliance[]{new BaseAppliance(), new BaseAppliance()}));
+        when(mockApiResponse.getContent()).thenReturn(Optional.of(new BaseAppliance[]{new SenseAppliance(), new SenseGuardAppliance()}));
         when(mockApiClient.get(eq("/v2/iot/locations/123/rooms/123/appliances"), any())).thenReturn(mockApiResponse);
         ApplianceAction action = new ApplianceAction();
         action.setApiClient(mockApiClient);
@@ -70,10 +70,10 @@ public class ApplianceActionTest {
     @Test
     public void getAppliance_validId_returnsApplianceAsSenseGuard() throws Exception {
         when(mockApiResponse.getStatusCode()).thenReturn(200);
-        BaseAppliance appliance = new BaseAppliance("123", new Room());
-        appliance.setType(SenseGuardAppliance.TYPE);
+        BaseAppliance appliance = new SenseGuardAppliance("123", new Room());
+//        appliance.setType(SenseGuardAppliance.TYPE);
         when(mockApiResponse.getContent()).thenReturn(Optional.of(appliance));
-        when(mockApiResponse.getContentAs(SenseGuardAppliance.class)).thenReturn(Optional.of(new SenseGuardAppliance("123", new Room())));
+//        when(mockApiResponse.getContentAs(SenseGuardAppliance.class)).thenReturn(Optional.of(new SenseGuardAppliance("123", new Room())));
         when(mockApiClient.get(eq("/v2/iot/locations/123/rooms/123/appliances/123"), any())).thenReturn(mockApiResponse);
         ApplianceAction action = new ApplianceAction();
         action.setApiClient(mockApiClient);
@@ -89,10 +89,10 @@ public class ApplianceActionTest {
     @Test
     public void getAppliance_validId_returnsApplianceAsSense() throws Exception {
         when(mockApiResponse.getStatusCode()).thenReturn(200);
-        BaseAppliance appliance = new BaseAppliance("123", new Room());
+        BaseAppliance appliance = new SenseAppliance("123", new Room());
         appliance.setType(SenseAppliance.TYPE);
         when(mockApiResponse.getContent()).thenReturn(Optional.of(appliance));
-        when(mockApiResponse.getContentAs(SenseAppliance.class)).thenReturn(Optional.of(new SenseAppliance("123", new Room())));
+//        when(mockApiResponse.getContentAs(SenseAppliance.class)).thenReturn(Optional.of(new SenseAppliance("123", new Room())));
         when(mockApiClient.get(eq("/v2/iot/locations/123/rooms/123/appliances/123"), any())).thenReturn(mockApiResponse);
         ApplianceAction action = new ApplianceAction();
         action.setApiClient(mockApiClient);
@@ -194,7 +194,7 @@ public class ApplianceActionTest {
         SenseGuardApplianceData applianceData = new SenseGuardApplianceData("123", new SenseGuardAppliance());
         applianceData.setType(103);
         when(mockApiResponse.getContent()).thenReturn(Optional.of(applianceData));
-        when(mockApiResponse.getContentAs(any())).thenReturn(Optional.of(applianceData));
+//        when(mockApiResponse.getContentAs(any())).thenReturn(Optional.of(applianceData));
         when(mockApiClient.get(eq("/v2/iot/locations/123/rooms/123/appliances/123/data" +
                 rangeText), any())).thenReturn(mockApiResponse);
     }

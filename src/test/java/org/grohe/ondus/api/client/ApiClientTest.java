@@ -1,8 +1,17 @@
 package org.grohe.ondus.api.client;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import static org.grohe.ondus.api.TestResponse.A_TOKEN;
+import static org.grohe.ondus.api.TestResponse.getOkResponse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.NoSuchElementException;
+
 import org.apache.http.ProtocolVersion;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -10,19 +19,11 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicHttpResponse;
 import org.apache.http.message.BasicStatusLine;
 import org.grohe.ondus.api.TestResponse;
-import org.grohe.ondus.api.actions.Action;
+import org.grohe.ondus.api.actions.AbstractAction;
 import org.grohe.ondus.api.model.Authentication;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-
-import java.util.NoSuchElementException;
-
-import static org.grohe.ondus.api.TestResponse.A_TOKEN;
-import static org.grohe.ondus.api.TestResponse.getOkResponse;
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 public class ApiClientTest {
     private static final BasicHttpResponse EXAMPLE_RESPONSE_500 = new BasicHttpResponse(new BasicStatusLine(
@@ -111,10 +112,6 @@ public class ApiClientTest {
         assertEquals(client, action.getApiClient());
     }
 
-    @NoArgsConstructor
-    private static class TestAction implements Action {
-        @Getter
-        @Setter
-        private ApiClient apiClient;
+    public static class TestAction extends AbstractAction {
     }
 }

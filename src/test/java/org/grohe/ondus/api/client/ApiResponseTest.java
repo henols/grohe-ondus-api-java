@@ -1,10 +1,17 @@
 package org.grohe.ondus.api.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+
 import lombok.NoArgsConstructor;
 import org.apache.http.HttpResponse;
 import org.apache.http.ProtocolVersion;
 import org.apache.http.message.BasicStatusLine;
+import org.grohe.ondus.api.model.SenseAppliance;
+import org.grohe.ondus.api.model.SenseGuardAppliance;
 import org.junit.Test;
 
 import java.util.Optional;
@@ -37,7 +44,7 @@ public class ApiResponseTest {
     public void getContentAs_200_returnsContentAsClass() throws Exception {
         ApiResponse<TestResponse> apiResponse = new ApiResponse<>(getOkResponse(), TestResponse.class);
 
-        Optional<InheritedTestResponse> actualResult = apiResponse.getContentAs(InheritedTestResponse.class);
+        Optional<TestResponse> actualResult = apiResponse.getContent();
         assertTrue(actualResult.isPresent());
         assertThat(actualResult.get(), instanceOf(InheritedTestResponse.class));
     }
@@ -51,6 +58,12 @@ public class ApiResponseTest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     @NoArgsConstructor
+    @JsonTypeInfo(use = Id.NAME,
+    include = JsonTypeInfo.As.PROPERTY,
+    property = "token")
+    @JsonSubTypes({
+    @Type(value = InheritedTestResponse.class, name = "A_TOKEN"),
+    })
     private static class TestResponse {
     }
 

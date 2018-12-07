@@ -11,25 +11,35 @@ import java.io.IOException;
 
 @NoArgsConstructor
 public class LoginAction extends AbstractAction {
-    private static final String LOGIN_URL = "/v2/iot/auth/users/login";
+	private static final String LOGIN_URL = "/v2/iot/auth/users/login";
 
-    public String getToken(String username, String password) throws IOException, LoginException {
-        ApiResponse<Authentication> authResponse = getApiClient()
-                .post(LOGIN_URL, new LoginRequest(username, password), Authentication.class);
+	public String getToken(String username, String password) throws IOException, LoginException {
+		ApiResponse<Authentication> authResponse = getApiClient().post(LOGIN_URL, new LoginRequest(username, password),
+				Authentication.class);
 
-        if (authResponse.getStatusCode() == 441) {
-            throw new LoginException("441 - Unauthorized");
-        }
-        return authResponse.getContent()
-                .orElseThrow(() -> new IllegalArgumentException(
-                        String.format("Unknown response with code %d", authResponse.getStatusCode())))
-                .getToken();
-    }
+		if (authResponse.getStatusCode() == 441) {
+			throw new LoginException("441 - Unauthorized");
+		}
+		return authResponse.getContent().orElseThrow(() -> new IllegalArgumentException(
+				String.format("Unknown response with code %d", authResponse.getStatusCode()))).getToken();
+	}
 
-    @AllArgsConstructor
-    @Getter
-    class LoginRequest {
-        private String username;
-        private String password;
-    }
+	class LoginRequest {
+		private String username;
+		private String password;
+
+		public LoginRequest(String username, String password) {
+			this.username = username;
+			this.password = password;
+		}
+
+		public String getUsername() {
+			return username;
+		}
+
+		public String getPassword() {
+			return password;
+		}
+
+	}
 }

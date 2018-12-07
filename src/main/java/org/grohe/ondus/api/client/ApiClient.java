@@ -20,7 +20,6 @@ public class ApiClient {
 
     private String baseUrl;
     private HttpClient httpClient;
-    @Setter
     private String token;
     private ObjectMapper mapper = new ObjectMapper();
 
@@ -72,4 +71,8 @@ public class ApiClient {
 
         return action;
     }
+    
+    public void setToken(String token) {
+		this.token = token;
+	}
 }

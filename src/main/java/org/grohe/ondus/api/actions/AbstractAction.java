@@ -1,13 +1,16 @@
 package org.grohe.ondus.api.actions;
 
-import lombok.Setter;
 import org.grohe.ondus.api.client.ApiClient;
 
-public class AbstractAction implements Action {
-    @Setter
+public abstract class AbstractAction implements Action {
     private ApiClient apiClient;
 
-    ApiClient getApiClient() {
+    public ApiClient getApiClient() {
         return apiClient;
+    }
+    
+    @Override
+    public void setApiClient(ApiClient apiClient) {
+		this.apiClient = apiClient;
     }
 }

@@ -38,17 +38,7 @@ public class ApplianceAction extends AbstractAction {
 
         Optional<BaseAppliance> applianceOptional = applianceApiResponse.getContent();
         if (applianceOptional.isPresent()) {
-            BaseAppliance appliance = applianceOptional.get();
-            switch (appliance.getType()) {
-                case SenseGuardAppliance.TYPE:
-                    appliance = applianceApiResponse.getContentAs(SenseGuardAppliance.class).get();
-                    break;
-                case SenseAppliance.TYPE:
-                    appliance = applianceApiResponse.getContentAs(SenseAppliance.class).get();
-                    break;
-            }
-            appliance.setRoom(inRoom);
-            applianceOptional = Optional.of(appliance);
+        	applianceOptional.get().setRoom(inRoom);
         }
 
         return applianceOptional;
@@ -67,17 +57,7 @@ public class ApplianceAction extends AbstractAction {
 
         Optional<BaseApplianceData> applianceOptional = applianceApiResponse.getContent();
         if (applianceOptional.isPresent()) {
-            BaseApplianceData applianceData = applianceOptional.get();
-            switch (applianceData.getType()) {
-                case SenseGuardAppliance.TYPE:
-                    applianceData = applianceApiResponse.getContentAs(SenseGuardApplianceData.class).get();
-                    break;
-                case SenseAppliance.TYPE:
-                    applianceData = applianceApiResponse.getContentAs(SenseApplianceData.class).get();
-                    break;
-            }
-            applianceData.setAppliance(appliance);
-            applianceOptional = Optional.of(applianceData);
+            applianceOptional.get().setAppliance(appliance);
         }
 
         return applianceOptional;

@@ -9,30 +9,37 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 public class SenseAppliance extends BaseAppliance {
     public static final int TYPE = 101;
 
     private Config config;
 
+    public SenseAppliance() {
+        super(TYPE);
+    }
     public SenseAppliance(String applianceId, Room inRoom) {
-        super(applianceId, inRoom);
+    	super(applianceId, inRoom, TYPE);
     }
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
+    public Config getConfig() {
+		return config;
+	}
+    public void setConfig(Config config) {
+		this.config = config;
+	}
+    
     @JsonIgnoreProperties(ignoreUnknown = true)
     public class Config {
         private List<Threshold> thresholds = null;
+        public List<Threshold> getThresholds() {
+			return thresholds;
+		}
+        
+        public void setThresholds(List<Threshold> thresholds) {
+			this.thresholds = thresholds;
+		}
     }
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Threshold {
         @JsonProperty("quantity")
@@ -43,5 +50,30 @@ public class SenseAppliance extends BaseAppliance {
         private Integer value;
         @JsonProperty("enabled")
         private Boolean enabled;
+		public String getQuantity() {
+			return quantity;
+		}
+		public void setQuantity(String quantity) {
+			this.quantity = quantity;
+		}
+		public String getType() {
+			return type;
+		}
+		public void setType(String type) {
+			this.type = type;
+		}
+		public Integer getValue() {
+			return value;
+		}
+		public void setValue(Integer value) {
+			this.value = value;
+		}
+		public Boolean getEnabled() {
+			return enabled;
+		}
+		public void setEnabled(Boolean enabled) {
+			this.enabled = enabled;
+		}
+        
     }
 }
